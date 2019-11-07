@@ -28,6 +28,7 @@ class ReminderEmailSender
      */
     public function handle(RemiderEvent $event)
     {
+        dd(1);
         $user = $event->user;
         $remider = $event->remider;
         $detail = [
@@ -35,6 +36,7 @@ class ReminderEmailSender
             'email' => $user->email,
             'code' => $remider->code,
         ];
+        dd($detail);
         Mail::to($user->email)->queue(new ReminderMailable($detail));
     }
 }

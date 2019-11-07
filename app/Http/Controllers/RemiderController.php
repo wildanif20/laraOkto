@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Event;
 use App\Events\RemiderEvent;
 use App\User;
-use Cartalyst\Sentinel\Laravel\Facades\Reminder;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Reminder;
+use Sentinel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Symfony\Component\EventDispatcher\Event;
+use Session;
 
 class RemiderController extends Controller
 {
@@ -18,13 +18,17 @@ class RemiderController extends Controller
 
     public function store(Request $request){
         $getuser = User::where('email', $request->email)->first();
-
+        $user = Sentinel::findById($getuser->id);
+        
+        
         if($getuser){
-            $user = Sentinel::findById($getuser->id);
+            // dd(Reminder::create($user));
             ($remider = Reminder::exists($user)) || ($remider = Reminder::create($user));
-            Event::fire(new RemiderEvent($user, $remider));
+            Event(new RemiderEvent($user, $remider));
             Session::flash('notice', 'Chech your email for instruction');
+            dd('berhasil');
         } else {
+            dd('gagal');
             Session::flash('error', 'Email not valid');
         }
         return view('remiders.create');

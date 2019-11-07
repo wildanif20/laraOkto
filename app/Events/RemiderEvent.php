@@ -9,14 +9,13 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Sentinel, Request;
-use App\User;
 
 class RemiderEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    use InteractsWithSockets, SerializesModels;
-    public $user, $remider;
+    // use InteractsWithSockets, SerializesModels;
+    public $user;
+    public $remider;
 
     /**
      * Create a new event instance.
@@ -27,6 +26,7 @@ class RemiderEvent
     {
         $this->user = $user;
         $this->remider = $remider;
+        //  dd(7);
     }
 
     /**
