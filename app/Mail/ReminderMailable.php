@@ -16,6 +16,7 @@ class ReminderMailable extends Mailable
      *
      * @return void
      */
+    public $detail;
     public function __construct($detail)
     {
         $this->detail = $detail;

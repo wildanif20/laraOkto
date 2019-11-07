@@ -9,6 +9,7 @@ use Reminder;
 use Sentinel;
 use Illuminate\Http\Request;
 use Session;
+use App\Http\Requests\ReminderRequest;
 
 class RemiderController extends Controller
 {
@@ -18,13 +19,10 @@ class RemiderController extends Controller
 
     public function store(Request $request){
         $getuser = User::where('email', $request->email)->first();
-        $user = Sentinel::findById($getuser->id);
-        
-        
         if($getuser){
-            // dd(Reminder::create($user));
+            $user = Sentinel::findById($getuser->id); 
             ($remider = Reminder::exists($user)) || ($remider = Reminder::create($user));
-            Event(new RemiderEvent($user, $remider));
+            Event::dispatch(new RemiderEvent($user, $remider));
             Session::flash('notice', 'Chech your email for instruction');
             dd('berhasil');
         } else {
@@ -46,7 +44,7 @@ class RemiderController extends Controller
 
     public function update(ReminderRequest $request, $id, $code){
         $user = Sentinel::findById($id);
-        $remider = Remider::exists($user, $code);
+        $remider = Reminder::exists($user, $code);
 
         if($remider){
             Session::flash('notice', 'You password success midified');

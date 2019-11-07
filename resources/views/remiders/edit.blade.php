@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <form action="{{route('remiders.store')}}" method="post">
+    <form action="{{route('remiders.edit' ,['id' => $id, 'code' => $code ])}}" method="post">
         {{ csrf_field() }}
         <div class="form-group">
           <label for="">Password</label>

@@ -26,7 +26,7 @@ class RemiderEvent
     {
         $this->user = $user;
         $this->remider = $remider;
-        //  dd(7);
+        
     }
 
     /**
