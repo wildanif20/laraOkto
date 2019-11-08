@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('content')
 <form >
-    {{ csrf_field() }}
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" readonly class="form-control" id="title" placeholder="title..." name="title"
@@ -29,36 +28,27 @@
 
 
 <h3 class="mt-5">Comment This Article</h3>
-<form action="{{route('Comment.store',$article->id)}}" method="post">
+<form action="{{route('Comment.store',$article->id)}}" class="fcomment">
     {{ csrf_field() }}    
-    <div class="form-group">
+    <div class="form-group" >
         {{-- <label for="title">Title</label> --}}
         <input type="text" class="form-control" id="title" placeholder="title..." name="article_id"
             value="{{$article->id}}" hidden>
     </div>
     <div class="form-group">
         <label for="title">User</label>
-        <input type="text" class="form-control" id="title" placeholder="Alias..." name="user">
+        <input type="text" class="form-control" id="title" placeholder="Alias..." name="user" id="user">
     </div>
-    <div class="form-group">
+    <div class="form-group fcomment">
         <label for="content">Comment</label>
-        <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+        <textarea class="form-control" id="content" rows="3" name="content" id="content"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-primary" id="save">Post</button>
     <button type="reset" class="btn btn-secondary">Reset</button>
 </form>
-</form>
+
 
 <h3 class="mt-5 text-center">Comments</h3>
-@foreach ($comments as $item)
-<div class="card">
-    <div class="card-header">
-      <span class="badge badge-info">{{$item->user}}</span>
-    </div>
-    <div class="card-body">      
-      <p class="card-text">{{$item->content}}</p>      
-    </div>
-  </div>
-  <br />
-@endforeach
+<div class="comment_article"></div>
+@include('articles.comment')
 @endsection

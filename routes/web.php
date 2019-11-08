@@ -23,7 +23,11 @@ Route::get('/contact','HomeController@contact');
 Route::post('/tampil','HomeController@tampil');
 Route::get('/add','ArticlesController@new');
 Route::resource('Article', 'ArticlesController');
+
+//
 Route::resource('Comment', 'CommentController',['only'=>['store']]);
+
+//
 Auth::routes();
 
 //

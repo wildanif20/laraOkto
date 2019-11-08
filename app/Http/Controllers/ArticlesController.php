@@ -23,15 +23,23 @@ class ArticlesController extends Controller
     public function index(Request $request)
     {
         //Tampung data yang akan di kirim ke view articles/index
-        $content = $request->input('content');
-        if(!empty($content))
-        {
-            $articles = Article::where('title','like','%'.$content.'%')
-            ->orWhere('content','like','%'.$content.'%')->paginate(3);
-        }else
-        {
-            $articles = Article::paginate(6);
+        // $content = $request->input('content');
+        // if(!empty($content))
+        // {
+        //     $articles = Article::where('title','like','%'.$content.'%')
+        //     ->orWhere('content','like','%'.$content.'%')->paginate(3);
+        // }else
+        // {
+        //     $articles = Article::paginate(6);
+        // }
+        // dd($request->all());
+        if ($request->ajax()) {
+            $articles = Article::with('comments')->where('title', 'like', '%' . $request->search . '%')->paginate(2);
+            $view = (string) view('articles.list')->with('articles', $articles)->render();
+
+            return response()->json(['view' => $view, 'status' => 'success']);
         }
+        $articles = Article::paginate(6);
         return view('articles/index')->with('articles', $articles);
     }
 

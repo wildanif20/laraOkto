@@ -6,6 +6,7 @@ use App\Comment;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Session, Redirect, Validator;
+
 class CommentController extends Controller
 {
     /**
@@ -37,15 +38,21 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), Comment::valid());
-        if($validator->fails())
-        {
-            return Redirect::to('Article/'. $request->article_id)
-            ->withErrors($validator)
-            ->withInput();
-        }else{
-            Comment::create($request->all());
-            Session::flash('notice', 'Success add comment');
-            return Redirect::to('Article/'. $request->article_id);
+        
+        // if ($request->ajax()){
+        //     $comment = Comment::create($request->all());
+        //     $view = (String) view('articles.comment')->with('comments', $comment)->render();
+        //     return response()->json(['view' => $view, 'status' => 'Success']);
+        // }
+
+        if ($request->ajax()) {
+            $comment = Comment::create($request->all());
+            $view = (String) view('articles.show')->with('comments', $comment)->render();
+            return response()->json(['view' => $view, 'status' => 'Successs']);
+        } else {
+            $comment = Comment::create($request->all());
+            $view = (String) view('articles.comment')->with('comments', $comment)->render();
+            return response()->json(['view' => $view, 'status' => 'Successs']);
         }
     }
 

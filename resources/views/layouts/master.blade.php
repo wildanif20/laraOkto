@@ -7,6 +7,7 @@
     <title>Tugas</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -119,6 +120,8 @@
     </footer>
     <!-- footer_end -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="{{asset('/js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('/js/custome.js')}}"></script>
     </body>
 
 </html>
