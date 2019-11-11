@@ -35,6 +35,7 @@ class ArticlesController extends Controller
         //     $articles = Article::paginate(6);
         // }
         // dd($request->all());
+        dd($request->all());
         if ($request->ajax()) {
             $articles = Article::with('comments')->where('title', 'like', '%' . $request->search . '%')->paginate(2);
             $view = (string) view('articles.list')->with('articles', $articles)->render();
