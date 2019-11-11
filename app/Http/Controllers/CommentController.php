@@ -38,22 +38,12 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), Comment::valid());
-        
-        // if ($request->ajax()){
-        //     $comment = Comment::create($request->all());
-        //     $view = (String) view('articles.comment')->with('comments', $comment)->render();
-        //     return response()->json(['view' => $view, 'status' => 'Success']);
-        // }
 
         if ($request->ajax()) {
-            $comment = Comment::create($request->all());
-            $view = (String) view('articles.show')->with('comments', $comment)->render();
-            return response()->json(['view' => $view, 'status' => 'Successs']);
-        } else {
-            $comment = Comment::create($request->all());
+            $comment = Comment::where('article_id', $request->article_id)->latest()->get();
             $view = (String) view('articles.comment')->with('comments', $comment)->render();
             return response()->json(['view' => $view, 'status' => 'Successs']);
-        }
+        } 
     }
 
     /**
