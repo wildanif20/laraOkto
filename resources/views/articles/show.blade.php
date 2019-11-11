@@ -49,6 +49,7 @@
 
 
 <h3 class="mt-5 text-center">Comments</h3>
-<div class="comment_article"></div>
-@include('articles.comment')
+<div class="comment_article">
+    @include('articles.comment')
+</div>
 @endsection

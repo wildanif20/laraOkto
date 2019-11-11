@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Role extends Migration
+class AddFieldRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class Role extends Migration
      */
     public function up()
     {
-        // Schema::create('roles', function (Blueprint $table) {
-        //     $table->string('slug');
-        //     $table->text('permissions');
-        // });
+        Schema::table('roles', function (Blueprint $table) {
+            $table->string('slug');
+            $table->text('permissions');
+        });
     }
 
     /**

@@ -47,6 +47,18 @@ Route::get('logout', 'SessionsController@logout')->name('logout.session');
 //Remider checl in database
 Route::get('forgot-password', 'RemiderController@create')->name('remiders.create');
 Route::post('forgot-password', 'RemiderController@store')->name('remiders.store');
+
 //handle change password
 Route::get('reset-password/{id}/{token}', 'RemiderController@edit')->name('remiders.edit');
 Route::post('reset-password/{id}/{token}', 'RemiderController@update')->name('remiders.update');
+
+//Group middleware
+Route::group(['middlerware' => 'sentinel'], function () {
+    Route::resource('articles', 'ArticlesController');
+});
+
+//Group middleware 
+Route::group(['prefix' => 'admin', 'middleware' => ['sentinel', 'hasAdmin']], function () {
+    Route::get('/Article', 'ArticlesController@index')->name('admin.dashboard');
+    Route::get('/dashboard', 'Admin\Dashboard\AdminController@index')->name('admin.articles.list');
+});
