@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Jobs\JobPertama; //1
+use App\Jobs\JobKedua; //2
 use App\User;
 
 class HomeController extends Controller
@@ -14,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('sentinel');
+        //    $this->middleware('sentinel'); //2
     }
 
     /**
@@ -28,17 +30,27 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function gallery(){
+    //Function test jobs
+    public function tesJob()
+    { 
+        JobPertama::dispatch("Belajar queue dengan");
+        JobKedua::dispatch("Laravel");
+        return "Berhasil";
+    }
+
+
+    public function gallery()
+    {
         return view('menu/gallery');
     }
 
-    public function profile(){
+    public function profile()
+    {
         return view('menu/profile');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('menu/contact');
     }
-
-    
 }

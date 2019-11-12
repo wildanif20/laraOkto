@@ -63,3 +63,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['sentinel', 'hasAdmin']], fu
     Route::get('/admin', 'Admin\DasboardAdminController@index')->name('admin.dashboard');
     // Route::get('/dashboard', 'Admin\DasboardAdminController@index')->name('admin.articles.list');
 });
+
+//Test Job
+Route::get('/tesJob', 'HomeController@tesJob')->name('tesJob');

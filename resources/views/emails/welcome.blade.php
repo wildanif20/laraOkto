@@ -1,0 +1,1 @@
+Selamat Datang {{$user->first_name}}, selamat Bergabung :D

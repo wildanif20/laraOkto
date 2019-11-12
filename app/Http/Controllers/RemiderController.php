@@ -7,8 +7,8 @@ use App\Events\RemiderEvent;
 use App\User;
 use Reminder;
 use Sentinel;
-use Illuminate\Http\Request;
 use Session;
+use Illuminate\Http\Request;
 use App\Http\Requests\ReminderRequest;
 
 class RemiderController extends Controller
@@ -23,10 +23,8 @@ class RemiderController extends Controller
             $user = Sentinel::findById($getuser->id); 
             ($remider = Reminder::exists($user)) || ($remider = Reminder::create($user));
             Event::dispatch(new RemiderEvent($user, $remider));
-            Session::flash('notice', 'Chech your email for instruction');
-            dd('berhasil');
+            Session::flash('flash_message', 'Chech your email for instruction');
         } else {
-            dd('gagal');
             Session::flash('error', 'Email not valid');
         }
         return view('remiders.create');

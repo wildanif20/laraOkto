@@ -123,23 +123,26 @@ class ArticlesController extends Controller
         // return redirect()->route('Article.index');
         
         
-        $pathImage = 'images/article/';
+        // $art = Article::find($id);
+        // // dd($art);
+        // $pathImage = 'images/article/';
 
-        $modelArticle = new Article();
-        if ($request->article_image){
-            //Rename file upload to Image_articlerandom.extensiondile
-            $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
-            //Path Location file 
-            $request->article_image->move(public_path('images/article/'), $article_image);
-            //Save name file to field article_image
-            $modelArticle->article_image = $article_image;
-        }
-        $title = $request->get('title');
-        $content = $request->get('content');
-        $modelArticle->title =$title;
-        $modelArticle->content = $content;
-        Article::find($id)->update($request->all());
-        return redirect()->route('Article.index');
+        // $modelArticle = new Article();
+        // if ($request->article_image){
+        //     //Rename file upload to Image_articlerandom.extensiondile
+        //     $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
+        //     //Path Location file 
+        //     $request->article_image->move(public_path('images/article/'), $article_image);
+        //     //Save name file to field article_image
+        //     $modelArticle->article_image = $article_image;
+        // }
+        // $title = $request->get('title');
+        // $content = $request->get('content');
+        // $modelArticle->title =$title;
+        // $modelArticle->content = $content;
+        // dd($modelArticle);
+        // Article::find($id)->update($request->all());
+        // return redirect()->route('Article.index');
 
     }
 

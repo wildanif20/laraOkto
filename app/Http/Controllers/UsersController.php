@@ -7,6 +7,7 @@ use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use DB;
+use App\Jobs\JobKedua;
 
 class UsersController extends Controller
 {
@@ -40,7 +41,8 @@ class UsersController extends Controller
             ];
             $user = Sentinel::registerAndActivate($credentials);
             $user->roles()->attach($role_id);
-            Session::flash('notice', 'Success create new user');
+            Session::flash('flash_message', 'Success create new user');
+            JobKedua::dispatch($user);
             DB::commit(); //save DB
         } catch (\Trowable $error) {
             DB::rollBack(); //Rolleback if insert data have error
