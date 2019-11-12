@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Comment;
 use Illuminate\Http\Request;
-use App\Http\Requests\ArticleRequest;
 
 class ArticlesController extends Controller
 {
@@ -35,7 +34,6 @@ class ArticlesController extends Controller
         //     $articles = Article::paginate(6);
         // }
         // dd($request->all());
-        dd($request->all());
         if ($request->ajax()) {
             $articles = Article::with('comments')->where('title', 'like', '%' . $request->search . '%')->paginate(2);
             $view = (string) view('articles.list')->with('articles', $articles)->render();
@@ -64,8 +62,25 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        Article::create($request->all());
+        $pathImage = 'images/article/';
+
+        $modelArticle = new Article();
+        if ($request->article_image){
+            //Rename file upload to Image_articlerandom.extensiondile
+            $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
+            //Path Location file 
+            $request->article_image->move(public_path('images/article/'), $article_image);
+            //Save name file to field article_image
+            $modelArticle->article_image = $article_image;
+        }
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $modelArticle->title =$title;
+        $modelArticle->content = $content;
+        $modelArticle->save();
+        
         return redirect()->route('Article.index');
+        // Article::create($request->all());
     }
 
     /**
@@ -104,8 +119,28 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Article::find($id)->update($request->all());
+        // return redirect()->route('Article.index');
+        
+        
+        $pathImage = 'images/article/';
+
+        $modelArticle = new Article();
+        if ($request->article_image){
+            //Rename file upload to Image_articlerandom.extensiondile
+            $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
+            //Path Location file 
+            $request->article_image->move(public_path('images/article/'), $article_image);
+            //Save name file to field article_image
+            $modelArticle->article_image = $article_image;
+        }
+        $title = $request->get('title');
+        $content = $request->get('content');
+        $modelArticle->title =$title;
+        $modelArticle->content = $content;
         Article::find($id)->update($request->all());
         return redirect()->route('Article.index');
+
     }
 
     /**

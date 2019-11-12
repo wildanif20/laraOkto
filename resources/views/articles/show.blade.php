@@ -1,6 +1,13 @@
 @extends('layouts.master')
 @section('content')
+<?php
+    $url = $article->img_article();
+?>
 <form >
+    <label for="Image"></label>
+    <div class="form-group">
+        <img src="{{ $url }}" alt="nul" class="img-fluid" width="400px" height="200px">
+    </div>
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" readonly class="form-control" id="title" placeholder="title..." name="title"
@@ -9,10 +16,11 @@
     <div class="form-group">
         <label for="content">Content</label>
         <textarea readonly class="form-control" id="content" rows="3" name="content">{{$article->content}}</textarea>
-    </div>    
+    </div>
 </form>
 
 
+{{-- Error Notice --}}
 @if ($errors->any())
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul>

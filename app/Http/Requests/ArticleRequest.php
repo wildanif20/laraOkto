@@ -26,8 +26,10 @@ class ArticleRequest extends FormRequest
         $id = $this->article;
         return [
             'title' => 'required|unique:articles,title|max:255',
-            'content' => 'required|unique:article,content|min:50'
+            'content' => 'required|unique:article,content|min:50',
+            'article_image' => 'require|mimes:jpeg,jpg,png|max:2048',
         ];
+        
     }
 
     public function messages()

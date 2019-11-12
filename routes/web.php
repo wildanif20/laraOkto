@@ -59,7 +59,7 @@ Route::group(['middlerware' => 'sentinel'], function () {
 
 //Group middleware 
 Route::group(['prefix' => 'admin', 'middleware' => ['sentinel', 'hasAdmin']], function () {
-    Route::get('/index', 'ArticlesController@index')->name('admin.articles.list');
+    Route::get('/index', 'ArticlesController@new')->name('admin.articles.list');
     Route::get('/admin', 'Admin\DasboardAdminController@index')->name('admin.dashboard');
     // Route::get('/dashboard', 'Admin\DasboardAdminController@index')->name('admin.articles.list');
 });
