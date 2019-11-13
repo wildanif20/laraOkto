@@ -119,30 +119,31 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Article::find($id)->update($request->all());
-        // return redirect()->route('Article.index');
-        
-        
-        // $art = Article::find($id);
-        // // dd($art);
-        // $pathImage = 'images/article/';
+        $pathImage = 'images/article/';
+        $modelArticle =  Article::find($id);
+        $patsebelum = 'images/article/'. $modelArticle->article_image;
 
-        // $modelArticle = new Article();
-        // if ($request->article_image){
-        //     //Rename file upload to Image_articlerandom.extensiondile
-        //     $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
-        //     //Path Location file 
-        //     $request->article_image->move(public_path('images/article/'), $article_image);
-        //     //Save name file to field article_image
-        //     $modelArticle->article_image = $article_image;
-        // }
-        // $title = $request->get('title');
-        // $content = $request->get('content');
-        // $modelArticle->title =$title;
-        // $modelArticle->content = $content;
-        // dd($modelArticle);
-        // Article::find($id)->update($request->all());
-        // return redirect()->route('Article.index');
+        if (file_exists($patsebelum)){
+            unlink($patsebelum);
+        }
+
+        if ($request->article_image){
+            //Rename file upload to Image_articlerandom.extensiondile
+            $article_image = 'image_article-'.str_random(5).time().'.'.$request->file('article_image')->getClientOriginalExtension();
+            //Path Location file 
+            $request->article_image->move(public_path('images/article/'), $article_image);
+            //Save name file to field article_image
+            $modelArticle->article_image = $article_image;
+        }
+        $title = $request->get('title');
+        $content = $request->get('content');
+
+        $modelArticle->title =$title;
+        $modelArticle->content = $content;        
+
+        $modelArticle->save();
+
+        return redirect()->route('Article.index');
 
     }
 
